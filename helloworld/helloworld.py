@@ -1,7 +1,6 @@
 import math
 
 def print_various_object_types():
-    
     number:int = 1
     
     print(type(number))
