@@ -33,7 +33,7 @@ def example_sum_method(a:int, b:int) -> int:
 
 def print_example_exception()->None:
     try:
-        list_example = [1,2,3]
+        list_example:list = [1,2,3]
         
         for element in list_example:
             if element > 1:
