@@ -8,6 +8,7 @@ def expect_for_valid_integer_input(min_number:int):
         except ValueError as e:
             print(f"Failed to convert {arg} to int. Please try again")
             arg = ""
+            continue
         
         if arg < min_number:
             print(f"Provided number {arg} was smaller than expected {min_number}. Please try again.")
@@ -17,13 +18,14 @@ def expect_for_valid_integer_input(min_number:int):
 def expect_for_valid_float_input(min_number:float):
     arg = ""
     while len(str(arg)) == 0:
-        print("Please input a valid integer")
+        print("Please input a valid floating point number")
         arg = input()
         try:
             arg = float(arg)
         except ValueError as e:
             print(f"Failed to convert {arg} to float. Please try again")
             arg = ""
+            continue
         
         if arg < min_number:
             print(f"Provided number {arg} was smaller than expected {min_number}. Please try again.")
