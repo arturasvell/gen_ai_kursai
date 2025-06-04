@@ -1,0 +1,25 @@
+{
+  "include": [
+    "homework"
+  ],
+
+  "exclude": [
+    "**/__pycache__",
+  ],
+
+  "defineConstant": {
+    "DEBUG": true
+  },
+
+  "reportMissingImports": "error",
+  "reportAssignmentType": "error",
+
+  "pythonVersion": "3.13",
+  "pythonPlatform": "Windows",
+
+  "executionEnvironments": [
+    {
+      "root": "homework"
+    }
+  ]
+}
