@@ -12,7 +12,8 @@ for item in split_items:
         print(f"Warning: '{item}' is not a valid float and will be skipped.")
 
 print("Parsed floats:", parsed_floats)
-
+sum_list = [1 for x in parsed_floats if x > 10]
+print(sum_list)
 print("Count of items with price more than 10: %s" % sum(1 for x in parsed_floats if x > 10))
 print("Average: %s" % mean(parsed_floats))
 print("Sum: %s" % sum(parsed_floats))
