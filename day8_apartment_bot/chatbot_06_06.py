@@ -2,7 +2,10 @@ import os
 import requests
 import json
 from requests.exceptions import RequestException
-# using system environment variables here
+from dotenv import load_dotenv
+
+load_dotenv()
+
 API_KEY = os.environ.get("GOOGLE_API_KEY")
 MODEL_NAME = "gemini-2.0-flash"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL_NAME}:generateContent?key={API_KEY}"
