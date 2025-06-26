@@ -48,7 +48,7 @@ MODEL = "gemini-2.5-flash"
 
 client = genai.Client(api_key=GOOGLE_AI_KEY)
 
-cheque_files = ["homework/cheque/data/c2.jpg"]
+cheque_files = ["homework/cheque/data/c7.jpg"]
 extracted_cheques_data = []
 
 for cheque_file_path in cheque_files:
