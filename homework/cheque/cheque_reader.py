@@ -10,9 +10,6 @@ import json
 # --- Pydantic Schemas ---
 
 class ReceiptItem(BaseModel):
-    """
-    Represents a single item on the receipt.
-    """
     description: str = Field(..., description="Description of the item purchased.")
     quantity: Optional[float] = Field(None, description="Quantity of the item, if specified.")
     unit: Optional[str] = Field(None, description="Unit of measure for the item (e.g., kg).")
@@ -20,9 +17,6 @@ class ReceiptItem(BaseModel):
     total_item_price: float = Field(..., description="Total price for this specific item.")
 
 class ReceiptInfo(BaseModel):
-    """
-    Represents extracted information from a receipt.
-    """
     company_name: Optional[str] = Field(None, description="The name of the company that issued the receipt.")
     company_address: Optional[str] = Field(None, description="The address of the company.")
     vat_payer_code: Optional[str] = Field(None, description="VAT payer code (PVM moketojo kodas).")
@@ -43,30 +37,21 @@ class ReceiptInfo(BaseModel):
     verification_code: Optional[str] = Field(None, description="VMI verification code (Saugojimo modulis numeris, Kvito parasas, Kvito kodas).")
     payment_card_number_last_digits: Optional[str] = Field(None, description="Last digits of the payment card number.")
 
-# New BaseModel to hold a list of receipts
 class ReceiptsInfo(BaseModel):
-    """
-    Represents a collection of extracted receipt information from multiple images.
-    """
     receipts: List[ReceiptInfo] = Field(..., description="A list of extracted receipt information objects.")
 
-
-# --- Main Execution ---
 
 load_dotenv()
 
 GOOGLE_AI_KEY = os.getenv("GOOGLE_API_KEY")
 MODEL = "gemini-1.5-flash"
 
-# CORRECTED: Reverting to the genai.Client initialization from your original code.
 client = genai.Client(api_key=GOOGLE_AI_KEY)
 
-# List of all receipt image files you want to process
 receipt_files = [
     "homework/cheque/data/c7.jpg",
     "homework/cheque/data/c1.jpg",
-    "homework/cheque/data/c2.jpg",
-    # "homework/cheque/data/c8.jpg" # Add your second image path here
+    "homework/cheque/data/c2.jpg"
 ]
 
 prompt = [
@@ -76,7 +61,6 @@ prompt = [
 
 try:
     print(f"Loading {len(receipt_files)} images...")
-    # Add all image files as Parts to the prompt list
     for receipt_file_path in receipt_files:
         with open(receipt_file_path, 'rb') as f:
             prompt.append(types.Part.from_bytes(
@@ -86,8 +70,6 @@ try:
 
     print(f"\nProcessing {len(receipt_files)} images in a single batch...")
 
-    # CORRECTED: Using the client.models.generate_content method and model name format
-    # that matches the genai.Client pattern.
     response = client.models.generate_content(
         model=f"models/{MODEL}",
         contents=prompt,
@@ -97,7 +79,6 @@ try:
         }
     )
 
-    # CORRECTED: Using the .parsed attribute for direct Pydantic model parsing.
     all_receipts: ReceiptsInfo = response.parsed # type: ignore
 
     print(f"Successfully extracted data from {len(all_receipts.receipts)} images.")
@@ -105,8 +86,6 @@ try:
     print("\n--- All Extracted Receipt Data ---")
     for i, receipt in enumerate(all_receipts.receipts):
         print(f"Receipt {i+1}:")
-        # The 'receipt' object is an instance of ReceiptInfo.
-        # model_dump_json is a clean way to print Pydantic models.
         print(receipt.model_dump_json(indent=2))
 
 except Exception as e:
