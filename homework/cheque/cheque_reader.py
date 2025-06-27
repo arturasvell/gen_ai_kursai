@@ -7,6 +7,8 @@ from rich import print
 from dotenv import load_dotenv
 import json
 
+# --- Pydantic Schemas ---
+
 class ReceiptItem(BaseModel):
     """
     Represents a single item on the receipt.
@@ -41,45 +43,71 @@ class ReceiptInfo(BaseModel):
     verification_code: Optional[str] = Field(None, description="VMI verification code (Saugojimo modulis numeris, Kvito parasas, Kvito kodas).")
     payment_card_number_last_digits: Optional[str] = Field(None, description="Last digits of the payment card number.")
 
+# New BaseModel to hold a list of receipts
+class ReceiptsInfo(BaseModel):
+    """
+    Represents a collection of extracted receipt information from multiple images.
+    """
+    receipts: List[ReceiptInfo] = Field(..., description="A list of extracted receipt information objects.")
+
+
+# --- Main Execution ---
+
 load_dotenv()
 
 GOOGLE_AI_KEY = os.getenv("GOOGLE_API_KEY")
-MODEL = "gemini-2.5-flash"
+MODEL = "gemini-1.5-flash"
 
+# CORRECTED: Reverting to the genai.Client initialization from your original code.
 client = genai.Client(api_key=GOOGLE_AI_KEY)
 
-cheque_files = ["homework/cheque/data/c7.jpg"]
-extracted_cheques_data = []
+# List of all receipt image files you want to process
+receipt_files = [
+    "homework/cheque/data/c7.jpg",
+    "homework/cheque/data/c1.jpg",
+    "homework/cheque/data/c2.jpg",
+    # "homework/cheque/data/c8.jpg" # Add your second image path here
+]
 
-for cheque_file_path in cheque_files:
-    try:
-        with open(cheque_file_path, 'rb') as f:
-            image_bytes = f.read()
+prompt = [
+    "For each of the following receipt images, extract the information according to the provided JSON schema. "
+    "Return the information as a list of structured JSON objects, one for each receipt."
+]
 
-        print(f"\nProcessing {cheque_file_path}...")
+try:
+    print(f"Loading {len(receipt_files)} images...")
+    # Add all image files as Parts to the prompt list
+    for receipt_file_path in receipt_files:
+        with open(receipt_file_path, 'rb') as f:
+            prompt.append(types.Part.from_bytes(
+                data=f.read(),
+                mime_type='image/jpeg'
+            )) # type: ignore
 
-        response = client.models.generate_content(
-            model=MODEL,
-            contents=[
-                "Extract the following information from this cheque image: cheque number, date, payee name, numeric amount, amount in words, bank name, account number, routing number, and memo. Return the information in a structured JSON format.",
-                types.Part.from_bytes(
-                    data=image_bytes,
-                    mime_type='image/jpeg'
-                )
-            ],
-            config={
-                "response_mime_type": "application/json",
-                "response_schema": ReceiptInfo
-            }
-        )
+    print(f"\nProcessing {len(receipt_files)} images in a single batch...")
 
-        cheque_data:ReceiptInfo = response.parsed # type: ignore
-        extracted_cheques_data.append(cheque_data)
-        print(f"Successfully extracted data from {cheque_file_path}")
-    except Exception as e:
-        print(f"Error processing {cheque_file_path}: {e}")
+    # CORRECTED: Using the client.models.generate_content method and model name format
+    # that matches the genai.Client pattern.
+    response = client.models.generate_content(
+        model=f"models/{MODEL}",
+        contents=prompt,
+        config={
+            "response_mime_type": "application/json",
+            "response_schema": ReceiptsInfo
+        }
+    )
 
-print("\n--- All Extracted Cheque Data ---")
-for i, cheque in enumerate(extracted_cheques_data):
-    print(f"Cheque {i+1}:")
-    print(cheque.model_dump_json(indent=2))
+    # CORRECTED: Using the .parsed attribute for direct Pydantic model parsing.
+    all_receipts: ReceiptsInfo = response.parsed # type: ignore
+
+    print(f"Successfully extracted data from {len(all_receipts.receipts)} images.")
+
+    print("\n--- All Extracted Receipt Data ---")
+    for i, receipt in enumerate(all_receipts.receipts):
+        print(f"Receipt {i+1}:")
+        # The 'receipt' object is an instance of ReceiptInfo.
+        # model_dump_json is a clean way to print Pydantic models.
+        print(receipt.model_dump_json(indent=2))
+
+except Exception as e:
+    print(f"An error occurred: {e}")
