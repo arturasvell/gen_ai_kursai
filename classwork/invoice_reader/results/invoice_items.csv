@@ -1,5 +1,20 @@
 is_valid,invoice_number,item_code,description,quantity,unit,unit_price,discount,tax,total_price
-True,INV-100,,Test for 23 fields,1.0,,,,,100.0
+True,3-456-2,Z4567,Invoice 3-456-2 Data 1,39.0,,5.0,,,195.0
+True,3-456-2,Z4568,Invoice 3-456-2 Data 2,40.0,,4.0,5.0,,155.0
+True,3-456-2,Z4569,Invoice 3-456-2 Data 3,30.0,,6.0,7.0,,173.0
+True,3-456-2,Z4570,Invoice 3-456-2 Data 4,40.0,,7.0,,,280.0
+True,3-456-2,Z4571,Invoice 3-456-2 Data 5,10.0,,4.0,,,40.0
+True,3-456-2,Z4572,Invoice 3-456-2 Data 6,5.0,,8.0,,,40.0
+True,3-456-2,Z4573,Invoice 3-456-2 Data 7,70.0,,6.0,,,420.0
+True,3-456-2,Z4574,Invoice 3-456-2 Data 8,25.0,,4.0,,,100.0
+True,3-456-2,Z4575,Invoice 3-456-2 Data 9,5.0,,7.0,3.0,,32.0
+True,3-456-2,Z4576,Invoice 3-456-2 Data 10,80.0,,1.0,,,80.0
+True,3-456-2,Z4577,Invoice 3-456-2 Data 11,65.0,,7.0,,,455.0
+True,3-456-2,Z4578,Invoice 3-456-2 Data 12,44.0,,1.0,,,44.0
+True,INV-100,,Test for 23 fields,1.0,,100.0,,,100.0
+True,INV-100,A123,Consulting Services,2.0,hours,30.0,,6.0,60.0
+True,INV-100,B456,Document Fee,3.0,,10.0,,3.0,30.0
+True,INV-100,C789,Printing Fee,10.0,pages,1.0,,1.0,10.0
 True,null,5-01-XX,null,1.0,,1.0,,,1.0
 True,null,5-02-XX,null,5.0,,1.5,,,7.5
 True,null,5-03-XX,null,2.0,,5.75,,,11.5
@@ -17,27 +32,12 @@ True,null,5-14-XX,null,4.0,,5.25,,,21.0
 True,null,5-15-XX,null,1.0,,99.99,,,99.99
 True,null,5-16-XX,null,2.0,,1350.0,,,2700.0
 True,null,5-17-XX,null,3.0,,56.95,,,170.85
-True,INV-002,,Solar Panel X: 5 units @ $120,,,,,,600.0
-True,INV-002,,Battery Pack Y: 2 units @ $150,,,,,,300.0
-True,INV-002,,Controller Z: 1 unit @ $80,,,,,,80.0
-True,INV-003,,Gear Assembly: 10 units @ $35,,,,,,350.0
-True,INV-003,,Hydraulic Pump: 2 units @ $200,,,,,,400.0
-True,INV-003,,Pressure Valve: 4 units @ $60,,,,,,240.0
-True,INV-001,,Widget A: 2 units @ $50,,,,,,100.0
-True,INV-001,,Gadget B: 1 unit @ $75,,,,,,75.0
-True,INV-001,,Doodad C: 3 units @ $20,,,,,,60.0
-True,3-456-2,Z4567,Invoice 3-456-2 Data 1,39.0,,5.0,,,195.0
-True,3-456-2,Z4568,Invoice 3-456-2 Data 2,40.0,,4.0,5.0,,155.0
-True,3-456-2,Z4569,Invoice 3-456-2 Data 3,30.0,,6.0,7.0,,173.0
-True,3-456-2,Z4570,Invoice 3-456-2 Data 4,40.0,,7.0,,,280.0
-True,3-456-2,Z4571,Invoice 3-456-2 Data 5,10.0,,4.0,,,40.0
-True,3-456-2,Z4572,Invoice 3-456-2 Data 6,5.0,,8.0,,,40.0
-True,3-456-2,Z4573,Invoice 3-456-2 Data 7,70.0,,6.0,,,420.0
-True,3-456-2,Z4574,Invoice 3-456-2 Data 8,25.0,,4.0,,,100.0
-True,3-456-2,Z4575,Invoice 3-456-2 Data 9,5.0,,7.0,3.0,,32.0
-True,3-456-2,Z4576,Invoice 3-456-2 Data 10,80.0,,1.0,,,80.0
-True,3-456-2,Z4577,Invoice 3-456-2 Data 11,65.0,,7.0,,,455.0
-True,3-456-2,Z4578,Invoice 3-456-2 Data 12,44.0,,1.0,,,44.0
-True,INV-100,A123,Consulting Services,2.0,hours,30.0,,6.0,60.0
-True,INV-100,B456,Document Fee,3.0,,10.0,,3.0,30.0
-True,INV-100,C789,Printing Fee,10.0,pages,1.0,,1.0,10.0
+True,INV-002,,Solar Panel X: 5 units @ $120,5.0,,120.0,,,600.0
+True,INV-002,,Battery Pack Y: 2 units @ $150,2.0,,150.0,,,300.0
+True,INV-002,,Controller Z: 1 unit @ $80,1.0,,80.0,,,80.0
+True,INV-003,,Gear Assembly: 10 units @ $35,10.0,,35.0,,,350.0
+True,INV-003,,Hydraulic Pump: 2 units @ $200,2.0,,200.0,,,400.0
+True,INV-003,,Pressure Valve: 4 units @ $60,4.0,,60.0,,,240.0
+True,INV-001,,Widget A: 2 units @ $50,2.0,,50.0,,,100.0
+True,INV-001,,Gadget B: 1 unit @ $75,1.0,,75.0,,,75.0
+True,INV-001,,Doodad C: 3 units @ $20,3.0,,20.0,,,60.0
