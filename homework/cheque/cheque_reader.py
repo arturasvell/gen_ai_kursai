@@ -10,7 +10,7 @@ import json
 # --- Pydantic Schemas ---
 
 class ReceiptItem(BaseModel):
-    description: str = Field(..., description="Description of the item purchased.")
+    description: str = Field(..., description="Description of the item purchased. Could be something generic like Prekė.")
     quantity: Optional[float] = Field(None, description="Quantity of the item, if specified.")
     unit: Optional[str] = Field(None, description="Unit of measure for the item (e.g., kg).")
     price_per_unit: Optional[float] = Field(None, description="Price per unit of the item.")
@@ -31,14 +31,14 @@ class ReceiptInfo(BaseModel):
     total_vat: Optional[float] = Field(None, description="The total VAT (PVM suma) included in the receipt.")
     amount_paid: Optional[float] = Field(None, description="The amount paid by the customer (Mokėti).")
     change_given: Optional[float] = Field(None, description="The amount of change given back (Grąža).")
-    items: List[ReceiptItem] = Field([], description="A list of items purchased.")
+    items: list[ReceiptItem] = Field([], description="A list of items purchased.")
     additional_info: Optional[str] = Field(None, description="Any other significant text or information on the receipt.")
     fiscal_device_code: Optional[str] = Field(None, description="Fiscal device code (AP-S/N).")
     verification_code: Optional[str] = Field(None, description="VMI verification code (Saugojimo modulis numeris, Kvito parasas, Kvito kodas).")
     payment_card_number_last_digits: Optional[str] = Field(None, description="Last digits of the payment card number.")
 
 class ReceiptsInfo(BaseModel):
-    receipts: List[ReceiptInfo] = Field(..., description="A list of extracted receipt information objects.")
+    receipts: list[ReceiptInfo] = Field(..., description="A list of extracted receipt information objects.")
 
 
 load_dotenv()
@@ -51,7 +51,11 @@ client = genai.Client(api_key=GOOGLE_AI_KEY)
 receipt_files = [
     "homework/cheque/data/c7.jpg",
     "homework/cheque/data/c1.jpg",
-    "homework/cheque/data/c2.jpg"
+    "homework/cheque/data/c2.jpg",
+    "homework/cheque/data/c3.jpg",
+    "homework/cheque/data/c4.jpg",
+    "homework/cheque/data/c5.jpg",
+    "homework/cheque/data/c6.jpg"
 ]
 
 prompt = [
